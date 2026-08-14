@@ -18,64 +18,62 @@ CREATE TABLE `cust_info_staging` (
 INSERT cust_info_staging
 SELECT * FROM cust_info;
 
+SELECT * FROM cust_info_staging;
+
 -- 1. Check for duplicates
--- Count the total number of rows
-SELECT COUNT(*) total_cust FROM cust_info_staging;
 -- Compare unique rows against the total row count to detect duplicates
-SELECT DISTINCT * FROM cust_info_staging;
+SELECT COUNT(*) total_cust FROM cust_info_staging;
+SELECT DISTINCT customer_id FROM cust_info_staging;
 
 -- 2. Standardize data
--- Check the value variations in the country column before cleaning
+-- Check the value variations in the country column before cleaning + Trim to remove whitespace
 SELECT DISTINCT country FROM cust_info_staging;
--- Preview the result after trimming extra whitespace
 SELECT TRIM(country) FROM cust_info_staging;
--- Remove leading/trailing whitespace from the country column
 UPDATE cust_info_staging
 SET country = TRIM(country);
 
--- Check the value variations in the gender column before cleaning
+-- Check the value variations in the gender column before cleaning + Trim to remove whitespace
 SELECT DISTINCT gender FROM cust_info_staging;
--- Preview the result after trimming extra whitespace
 SELECT TRIM(gender) FROM cust_info_staging;
--- Remove leading/trailing whitespace from the gender column
 UPDATE cust_info_staging
 SET gender = TRIM(gender);
 
--- 3. Null/blank values/anomalies
+-- 3. Null/blank values/outlier
 -- Confirm the gender column only contains valid categories
 SELECT DISTINCT gender FROM cust_info_staging;
 
--- Confirm the credit_card column only contains 0 or 1
+-- Confirm the column only contains 0 or 1
 SELECT DISTINCT credit_card FROM cust_info_staging;
-
--- Confirm the active_member column only contains 0 or 1
 SELECT DISTINCT active_member FROM cust_info_staging;
-
--- Confirm the churn column only contains 0 or 1
 SELECT DISTINCT churn FROM cust_info_staging;
 
--- Check customers with tenure above 10 years as a potential outlier
+-- Check customers with age outside a reasonable range
 SELECT * FROM cust_info_staging
-WHERE tenure > 10;
+WHERE age < 18;
 
--- Check customers with age outside a reasonable range (below 18 or above 100)
-SELECT * FROM cust_info_staging
-WHERE age < 18 OR age > 100;
-
--- Check customers with negative tenure or products_number of 0 or less (invalid values)
+-- Check customers with invalid values
 SELECT * FROM cust_info_staging
 WHERE tenure < 0 OR products_number <= 0;
 
--- customer_id, credit_score, country, gender, age, tenure, balance,
--- products_number, credit_card, active_member, estimated_salary, churn
--- Check whether the churn column has any NULL values
-SELECT * FROM cust_info_staging
-WHERE churn IS NULL;
+-- Check every column at once for NULL values
+SELECT 
+  SUM(customer_id IS NULL),
+  SUM(credit_score IS NULL),
+  SUM(country IS NULL),
+  SUM(gender IS NULL),
+  SUM(age IS NULL),
+  SUM(tenure IS NULL),
+  SUM(balance IS NULL),
+  SUM(products_number IS NULL),
+  SUM(credit_card IS NULL),
+  SUM(active_member IS NULL),
+  SUM(estimated_salary IS NULL),
+  SUM(churn IS NULL)
+FROM cust_info_staging;
 
--- Preview churn = 0 records as part of checking the value distribution
-SELECT * FROM cust_info_staging
-WHERE churn = 0;
+-- Check whether the column has any blank string values
+SELECT 
+  SUM(country IS NULL OR country = ''),
+  SUM(gender IS NULL OR gender = '')
+FROM cust_info_staging;
 
--- Check whether the churn column has any blank string values
-SELECT * FROM cust_info_staging
-WHERE churn = '';

@@ -20,12 +20,3 @@ GROUP BY churn;
 -- churn = 0 (Stayed)
 -- churn = 1 (Churned)
 
--- Quick check of the active member percentage for each churn group
-SELECT 
-  churn,
-  COUNT(*) as total_customers,
-  ROUND(SUM(active_member) * 100 / COUNT(*), 1) active_pct
-FROM cust_info_staging
-GROUP BY churn;
-
-

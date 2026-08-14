@@ -1,13 +1,9 @@
--- Preview the full dataset as a starting point for exploration
-SELECT * FROM cust_info_staging;
-
--- Group customers into 5 segments based on tenure, balance, product count, and active status, then compare churn rate per segment
 SELECT 
   CASE 
     WHEN tenure >= 6 AND balance > 100000 AND products_number >= 2 AND active_member = 1 THEN 'Loyal'
+    WHEN active_member = 0 THEN 'Non-Active'
     WHEN tenure >= 4 AND balance > 50000 THEN 'Established'
     WHEN tenure <= 2 AND balance <= 50000 THEN 'At-Risk'
-    WHEN active_member = 0 THEN 'Non-Active'
     ELSE 'Regular'
   END AS segment,
   COUNT(*) total_customers,
@@ -21,3 +17,4 @@ SELECT
 FROM cust_info_staging
 GROUP BY segment
 ORDER BY churn_rate_pct;
+
