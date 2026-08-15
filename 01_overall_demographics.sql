@@ -7,7 +7,7 @@ SELECT
   COUNT(DISTINCT country) num_countries,
   ROUND(AVG(age), 1) avg_age,
   MIN(age) min_age,
-  MAX(age) max_Sage,
+  MAX(age) max_age,
   ROUND(AVG(credit_score), 1) avg_credit_score,
   ROUND(AVG(balance), 1) avg_balance,
   ROUND(AVG(products_number), 1) avg_products_per_customer,

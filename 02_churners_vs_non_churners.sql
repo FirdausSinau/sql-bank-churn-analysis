@@ -20,6 +20,7 @@ GROUP BY churn;
 -- churn = 0 (Stayed)
 -- churn = 1 (Churned)
 
+-- Active member by country
 SELECT 
   country,
   ROUND(SUM(
@@ -38,3 +39,28 @@ END), 1) churn_rate_inactive
 FROM cust_info_staging
 GROUP BY country;
 
+-- Active member by age bracket
+SELECT 
+  CASE 
+    WHEN age < 30 THEN '18-29'
+    WHEN age < 40 THEN '30-39'
+    WHEN age < 50 THEN '40-49'
+    WHEN age < 60 THEN '50-59'
+    ELSE '60+'
+  END AS age_bracket,
+  ROUND(SUM(
+  CASE 
+	WHEN active_member = 0 THEN 1 
+	ELSE 0 
+  END) * 100 / COUNT(*), 1) inactive_pct,
+  ROUND(SUM(
+  CASE
+	WHEN active_member = 0 THEN churn 
+    ELSE NULL 
+END) * 100 / SUM(CASE
+	WHEN active_member = 0 THEN 1 
+    ELSE 0 
+END), 1) churn_rate_inactive
+FROM cust_info_staging
+GROUP BY age_bracket
+ORDER BY age_bracket;

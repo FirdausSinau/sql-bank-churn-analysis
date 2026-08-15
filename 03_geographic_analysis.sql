@@ -45,6 +45,7 @@ FROM cust_info_staging
 WHERE country = 'Germany' AND age >= 40
 GROUP BY country;
 
+-- Germany customers churn rate by age bracket
 SELECT 
   CASE 
     WHEN age < 30 THEN '18-29'
@@ -61,6 +62,7 @@ WHERE country = 'Germany'
 GROUP BY age_bracket
 ORDER BY age_bracket;
 
+-- -- Germany customers churn rate by age between 50-59 years old
 SELECT 
   active_member,
   COUNT(*) count,

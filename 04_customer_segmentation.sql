@@ -18,3 +18,11 @@ FROM cust_info_staging
 GROUP BY segment
 ORDER BY churn_rate_pct;
 
+-- Churn rate by product number
+SELECT 
+  products_number,
+  COUNT(*) count,
+  ROUND(SUM(churn) * 100 / COUNT(*), 1) churn_rate_pct
+FROM cust_info_staging
+GROUP BY products_number
+ORDER BY products_number;
