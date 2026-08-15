@@ -53,12 +53,12 @@ Categorical columns (`gender`, `credit_card`, `active_member`, `churn`) were als
 **Result**: the dataset was found to be clean, with no duplicates and no null or blank values in any column.
 
 ## Exploratory Data Analysis (EDA)
-Each business question was answered using a separate query file. The SQL code itself isn't reproduced here — refer to the linked file for the full query; this section focuses on the query result and what it means.
+Each business question was answered using a separate query file. The SQL code isn't reproduced here, refer to the linked file for the full query. This section focuses on the query result and what it means.
 
 ### Question 1: Attributes that differ between churners and non-churners
 **File**: `02_churners_vs_non_churners.sql`, which compares the average of each customer attribute between the churned and stayed groups.
 
-![Churners vs non-churners query result](screenshots/Churners%20vs%20Non-Churners.png)
+![Churners vs non-churners query result](screenshots/Churners%20vs%20Non-churnes.png)
 
 **Key findings**:
 - Out of 10,000 customers, 2,037 churned (20.4%) and 7,963 stayed (79.6%).
@@ -67,11 +67,11 @@ Each business question was answered using a separate query file. The SQL code it
 - The clearest gap is in active status: only 36.1% of churned customers were active, compared to 55.5% of customers who stayed.
 - Credit score (645.4 vs 651.9), credit card ownership (69.9% vs 70.7%), product count (1.5 vs 1.5), and estimated salary (101,465.7 vs 99,738.4) show little to no meaningful difference between the two groups.
 
-Since active status produced the clearest gap above, the same file follows up on it directly — splitting the question into two separate things: how common inactivity is (**prevalence**), versus how much it actually costs in churn once a customer is inactive (**consequence**). These aren't always the same thing.
+Active status produced the clearest gap above, so the same file follows up on it directly by splitting the question into two separate things: how common inactivity is (**prevalence**), and how much it actually costs in churn once a customer is inactive (**consequence**). These aren't always the same thing.
 
 ![Inactive prevalence and consequence by country](screenshots/Non-Active%20by%20Country.png)
 
-- How common inactivity is stays fairly similar across countries — 48.3% in France, 50.3% in Germany, 47.0% in Spain. The consequence doesn't: churn among inactive customers is 21.1% in France and 23.3% in Spain, but 41.1% in Germany. Inactivity is about equally common everywhere, but far more costly in Germany.
+- How common inactivity is stays fairly similar across countries: 48.3% in France, 50.3% in Germany, 47.0% in Spain. The consequence doesn't. Churn among inactive customers is 21.1% in France and 23.3% in Spain, but 41.1% in Germany. Inactivity is about equally common everywhere, but far more costly in Germany.
 
 ![Inactive prevalence and consequence by age bracket](screenshots/Non-Active%20by%20Age%20Bracket.png)
 
@@ -96,13 +96,11 @@ Since active status produced the clearest gap above, the same file follows up on
 | 50-59 | 869 | 8.7% | 56.0% | 57.1% |
 | 60+ | 526 | 5.3% | 27.9% | 78.9% |
 
-- Churn rate rises steadily from the youngest group up to a peak at ages 50-59 (56.0%), then drops at age 60+ (27.9%). This drop lines up with active member rate, which is lowest at 40-49 (46.7%) and highest at 60+ (78.9%) — older customers who are still banking with this institution tend to still be actively using it.
+- Churn rate rises steadily from the youngest group up to a peak at ages 50-59 (56.0%), then drops at age 60+ (27.9%). This drop lines up with active member rate, which is lowest at 40-49 (46.7%) and highest at 60+ (78.9%). Older customers who are still banking with this institution tend to still be actively using it.
 
 ![Gender distribution query result](screenshots/Demographics%20by%20gender.png)
 
-- Male customers make up 54.6% of the base (5,457) with a churn rate of 16.5%, while female customers make up 45.4% (4,543) with a notably higher churn rate of 25.1%.
-
-To check whether this gap is spread evenly across the customer base or concentrated in a specific country or age group, it's broken down further below.
+- Male customers make up 54.6% of the base (5,457) with a churn rate of 16.5%, while female customers make up 45.4% (4,543) with a notably higher churn rate of 25.1%. The gap is broken down further below, by country and by age group, to see where it's concentrated.
 
 ![Gender by country query result](screenshots/Gender%20by%20country.png)
 
@@ -124,7 +122,7 @@ To check whether this gap is spread evenly across the customer base or concentra
 | 50-59 | 62.9% | 49.6% | 13.3 pts |
 | 60+ | 34.0% | 22.8% | 11.2 pts |
 
-- Female customers churn more than male customers in every single age bracket, with no exceptions. The gap also widens with age — from 4.3 points at 18-29 to 13.3 points at 50-59, more than 3 times wider — suggesting the gender effect isn't a flat, additive difference, but one that grows stronger as customers get older. Female customers aged 50-59 have the highest churn rate of any age-gender combination in the dataset.
+- Female customers churn more than male customers in every single age bracket, with no exceptions. The gap also widens with age, from 4.3 points at 18-29 to 13.3 points at 50-59, more than 3 times wider. This suggests the gender effect isn't a flat, additive difference, but one that grows stronger as customers get older. Female customers aged 50-59 have the highest churn rate of any age-gender combination in the dataset.
 
 ### Question 3: Differences between German, French, and Spanish customers
 **File**: `03_geographic_analysis.sql`, which compares customer count, churn rate, and average characteristics across the three countries, then drills further into the highest-risk segment.
@@ -139,7 +137,7 @@ To check whether this gap is spread evenly across the customer base or concentra
 
 - Among German customers aged 40 and above, 579 churned, a churn rate of 50.8%, with an average balance of 120,052.5 and an active member rate of only 47.7%.
 
-Because that 50.8% figure blends every age from 40 upward into a single number, it's broken down by individual age bracket below to check whether the risk is spread evenly across that range.
+That 50.8% figure blends every age from 40 upward into a single number, so it's broken down by individual age bracket below to see whether the risk is spread evenly across that range.
 
 ![Germany age bracket query result](screenshots/Geographic%20Germany%20Age%20Bracket.png)
 
@@ -151,9 +149,9 @@ Because that 50.8% figure blends every age from 40 upward into a single number, 
 | 50-59 | 277 | **70.0%** |
 | 60+ | 123 | 41.5% |
 
-- The risk isn't spread evenly at all. It peaks sharply at ages 50-59 (70.0%) — well above the blended 50.8% figure for "40 and above" — and then drops at 60+, mirroring the same age pattern seen bank-wide in Question 2.
+- The risk isn't spread evenly at all. It peaks sharply at ages 50-59 (70.0%), well above the blended 50.8% figure for "40 and above," then drops at 60+, mirroring the same age pattern seen bank-wide in Question 2.
 
-Given that active status was already the clearest differentiator found in Question 1, the last check here is whether it compounds with being German and in the 50-59 bracket, or acts as a separate, unrelated factor.
+Active status was already the clearest differentiator found in Question 1. The last check here is whether it compounds with being German and in the 50-59 bracket, or acts as a separate, unrelated factor.
 
 ![Compounding query result](screenshots/Compounding.png)
 
@@ -165,7 +163,7 @@ Given that active status was already the clearest differentiator found in Questi
 - Being German and aged 50-59 already carries a high churn rate even while still active (51.9%). Becoming inactive on top of that pushes churn to 86.3%. The two factors compound rather than simply add together.
 
 ### Question 4: Customer segments at the bank
-**File**: `04_customer_segmentation.sql`, which groups customers into 5 segments based on tenure, balance, product count, and active status — checking active status first so every inactive customer is captured consistently — then compares the churn rate per segment.
+**File**: `04_customer_segmentation.sql`, which groups customers into 5 segments based on tenure, balance, product count, and active status. Active status is checked first, so every inactive customer is captured consistently, then the churn rate is compared per segment.
 
 **Segmentation criteria**: each customer is checked against the following conditions in order, and placed into the first one they match:
 
@@ -187,10 +185,10 @@ Given that active status was already the clearest differentiator found in Questi
 
 **Key findings**:
 - With active status checked first, Non-Active now captures every inactive customer in the dataset (4,849, or 48.5% of the base), and this segment has the highest churn rate of all (26.9%).
-- Established, now made up only of active customers who meet the tenure and balance criteria, has a churn rate of 17.0% — much lower than the 24.7% seen before active status was checked first (when the segment mixed active and inactive customers together).
+- Established, now made up only of active customers who meet the tenure and balance criteria, has a churn rate of 17.0%, much lower than the 24.7% seen before active status was checked first, when the segment mixed active and inactive customers together.
 - Loyal has the highest average balance (132,560.2) and product count (2.1) of any segment, but is no longer the lowest-churn segment. Regular (12.5%) and At-Risk (12.7%) are both lower. This suggests that once inactive customers are separated out properly, active status is a stronger churn driver than balance or product count on their own.
 
-One detail is worth checking further: Loyal has the highest average product count (2.1) of any segment, and Established has the lowest (1.3), which lines up with Loyal's lower churn rate. But an average can hide a lot — the table below breaks down churn rate by the exact number of products held, across the whole customer base rather than within just these five segments.
+One detail is worth checking further. Loyal has the highest average product count (2.1) of any segment, and Established has the lowest (1.3), which lines up with Loyal's lower churn rate. But an average can hide a lot, so the table below breaks down churn rate by the exact number of products held, across the whole customer base rather than within just these five segments.
 
 | Products Held | Customers | Churn Rate |
 |---|---|---|
@@ -199,7 +197,7 @@ One detail is worth checking further: Loyal has the highest average product coun
 | 3 | 266 | 82.7% |
 | 4 | 60 | 100.0% |
 
-- The relationship isn't a straight line. Two products is the safest spot (7.6% churn), clearly better than one (27.7%) — but three or four products come with very high churn (82.7% and 100%). Because the sample at 3-4 products is small (326 customers combined) and this dataset doesn't explain the underlying cause, this pattern is treated as an open question in the Conclusion and Recommendations below, rather than a basis for encouraging unlimited product cross-selling.
+- The relationship isn't a straight line. Two products is the safest spot (7.6% churn), clearly better than one (27.7%), but three or four products come with very high churn (82.7% and 100%). The sample at 3-4 products is small (326 customers combined), and this dataset doesn't explain the underlying cause, so this pattern is treated as an open question rather than a basis for encouraging unlimited product cross-selling.
 
 ## Tools Used
 - MySQL (MySQL Workbench) for data cleaning and analysis
