@@ -69,11 +69,11 @@ Each business question was answered using a separate query file. The SQL code is
 
 Active status produced the clearest gap above, so the same file follows up on it directly by splitting the question into two separate things: how common inactivity is (**prevalence**), and how much it actually costs in churn once a customer is inactive (**consequence**). These aren't always the same thing.
 
-![Inactive prevalence and consequence by country](screenshots/Non-Active%20by%20Country.png)
+![Inactive prevalence and consequence by country](screenshots/Non%20active%20by%20country.png)
 
 - How common inactivity is stays fairly similar across countries: 48.3% in France, 50.3% in Germany, 47.0% in Spain. The consequence doesn't. Churn among inactive customers is 21.1% in France and 23.3% in Spain, but 41.1% in Germany. Inactivity is about equally common everywhere, but far more costly in Germany.
 
-![Inactive prevalence and consequence by age bracket](screenshots/Non-Active%20by%20Age%20Bracket.png)
+![Inactive prevalence and consequence by age bracket](screenshots/Non%20active%20by%20age%20bracket.png)
 
 - The same pattern shows up by age. Prevalence is fairly flat (49.0% at 18-29, rising only slightly to 53.3% at 40-49) and drops at 60+ (21.1%). But churn among inactive customers climbs sharply with age: 9.8% at 18-29, 13.6% at 30-39, 38.0% at 40-49, 81.2% at 50-59, and 85.6% at 60+.
 
@@ -139,7 +139,7 @@ Active status produced the clearest gap above, so the same file follows up on it
 
 That 50.8% figure blends every age from 40 upward into a single number, so it's broken down by individual age bracket below to see whether the risk is spread evenly across that range.
 
-![Germany age bracket query result](screenshots/Geographic%20Germany%20Age%20Bracket.png)
+![Germany age bracket query result](screenshots/Geographic%20germany%20age%20bracket.png)
 
 | Age Bracket (Germany only) | Customers | Churn Rate |
 |---|---|---|
