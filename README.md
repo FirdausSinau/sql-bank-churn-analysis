@@ -41,14 +41,14 @@ The raw data was copied from the original `cust_info` table into a new table, `c
 The total row count was compared against the count of distinct `customer_id` values. Both returned 10,000, confirming there are no duplicate customers in the dataset.
 
 **3. Standardization**
-The `country` and `gender` columns were checked for inconsistent formatting (for example, extra whitespace) using `TRIM()`, then updated to remove any leading or trailing spaces. This ensures values used later for grouping (for example, `GROUP BY country`) aren't accidentally split into separate groups due to formatting differences.
+The `country` and `gender` columns were checked for inconsistent formatting (whitespace) using `TRIM()`, then updated to remove any leading or trailing spaces. This ensures values used later for grouping (`GROUP BY country`) aren't accidentally split into separate groups due to formatting differences.
 
 **4. Null and blank value check**
 Every column was checked for missing data, split by data type:
 - Numeric columns (`customer_id`, `credit_score`, `age`, `tenure`, `balance`, `products_number`, `credit_card`, `active_member`, `estimated_salary`, `churn`) were checked using `IS NULL`.
 - Text columns (`country`, `gender`) were checked using `IS NULL OR = ''`, since a text field can be blank without technically being NULL.
 
-Categorical columns (`gender`, `credit_card`, `active_member`, `churn`) were also checked with `SELECT DISTINCT` to confirm they only contain valid values, and `age`, `tenure`, and `products_number` were checked for out-of-range or invalid values (for example, age below 18, negative tenure, zero or negative product count).
+Categorical columns (`gender`, `credit_card`, `active_member`, `churn`) were also checked with `SELECT DISTINCT` to confirm they only contain valid values, and `age`, `tenure`, and `products_number` were checked for out-of-range or invalid values (age below 18, negative tenure, zero or negative product count).
 
 **Result**: the dataset was found to be clean, with no duplicates and no null or blank values in any column.
 
@@ -65,9 +65,9 @@ Each business question was answered using a separate query file. The SQL code is
 - Churned customers are older on average (44.8 years) than customers who stayed (37.4 years).
 - Churned customers hold a higher average balance (91,108.5) than those who stayed (72,745.3).
 - The clearest gap is in active status: only 36.1% of churned customers were active, compared to 55.5% of customers who stayed.
-- Credit score (645.4 vs 651.9), credit card ownership (69.9% vs 70.7%), product count (1.5 vs 1.5), and estimated salary (101,465.7 vs 99,738.4) show little to no meaningful difference between the two groups.
+- Credit score (645.4 vs 651.9), credit card ownership (69.9% vs 70.7%), product count (1.5 vs 1.5), and estimated salary (101,465.7 vs 99,738.4) show little to no meaningful differences.
 
-Active status produced the clearest gap above, so the same file follows up on it directly by splitting the question into two separate things: how common inactivity is (**prevalence**), and how much it actually costs in churn once a customer is inactive (**consequence**). These aren't always the same thing.
+Active status produced the clearest gap above, so the same file follows up on it directly by splitting the question into two separate things: how common inactivity is (**prevalence**), and how much it actually costs in churn once a customer is inactive (**consequence**).
 
 ![Inactive prevalence and consequence by country](screenshots/Non%20active%20by%20country.png)
 
@@ -122,7 +122,7 @@ Active status produced the clearest gap above, so the same file follows up on it
 | 50-59 | 62.9% | 49.6% | 13.3 pts |
 | 60+ | 34.0% | 22.8% | 11.2 pts |
 
-- Female customers churn more than male customers in every single age bracket, with no exceptions. The gap also widens with age, from 4.3 points at 18-29 to 13.3 points at 50-59, more than 3 times wider. This suggests the gender effect isn't a flat, additive difference, but one that grows stronger as customers get older. Female customers aged 50-59 have the highest churn rate of any age-gender combination in the dataset.
+- Female customers churn more than male customers in every single age bracket. The gap also widens with age, from 4.3 points at 18-29 to 13.3 points at 50-59, more than 3 times wider. This suggests the gender effect isn't a flat, additive difference, but one that grows stronger as customers get older. Female customers aged 50-59 have the highest churn rate of any age-gender combination in the dataset.
 
 ### Question 3: Differences between German, French, and Spanish customers
 **File**: `03_geographic_analysis.sql`, which compares customer count, churn rate, and average characteristics across the three countries, then drills further into the highest-risk segment.
@@ -200,8 +200,6 @@ One detail is worth checking further. Loyal has the highest average product coun
 - Two products is the safest spot (7.6% churn), clearly better than one (27.7%). But three or four products come with very high churn (82.7% and 100%). The sample at 3-4 products is small (326 customers combined), and this dataset doesn't explain the underlying cause, so this pattern is treated as an open question rather than a basis for encouraging unlimited product cross-selling.
 
 ## Conclusion
-Across all four questions, four attributes keep showing up: age, activity status, country, and gender. None of them tells the full story on its own. The real risk sits in how they combine.
-
 The highest-risk customer profile in this dataset is German, aged 50 to 59. Churn in this group is 70.0%, already high while the customer is still active (51.9%), and climbs to 86.3% once they become inactive. This is the sharpest and most concentrated risk found in the analysis, though also the smallest group (277 customers).
 
 Age 40-49 tells a different but equally important story. Its churn rate (30.8%) is much lower than 50-59's. But the group is far bigger (2,618 customers, more than double the size of 50-59), so it contributes the largest share of total churn: 806 out of 2,037 churned customers (39.6%), more than any other age bracket. A strategy based only on churn rate would miss this.
@@ -224,7 +222,7 @@ This bracket has a lower churn rate (30.8%) than 50-59, but it's the single larg
 63.9% of every customer who churned was already inactive beforehand, the most consistent signal in the dataset. Since inactivity is roughly equally common everywhere (about 47-53% of customers regardless of country or age), this needs to be a bank-wide policy rather than a segment-specific one. The urgency should scale with the customer's profile: an inactive customer in Germany or aged 50 and up needs immediate follow-up (churn risk above 80%), while a young or French/Spanish inactive customer is lower stakes (10-25%) but still worth a lighter-touch nudge.
 
 **Watchlist: customers holding 3 or 4 products**
-This group churns at 82.7% (3 products) and 100% (4 products), compared to just 7.6% for customers holding 2, the lowest rate in the dataset, and this holds true even among customers who are still active (80.3% churn). No recommendation is made for customers who already hold 3 or 4 products, since the dataset doesn't explain why the pattern exists, and there's no clear rationale for encouraging someone to drop a product. The safer, actionable move is for customers holding only 1 product (5,084 customers, 27.7% churn): encouraging a second product looks reasonable, since 2 products is the point with the lowest churn in the entire dataset.
+This group churns at 82.7% (3 products) and 100% (4 products), compared to just 7.6% for customers holding 2, the lowest rate in the dataset, and this holds true even among customers who are still active (80.3% churn). No recommendation is made for customers who already hold 3 or 4 products, since there's no clear rationale for encouraging someone to drop a product. The safer, actionable move is for customers holding only 1 product (5,084 customers, 27.7% churn): encouraging a second product looks reasonable, since 2 products is the point with the lowest churn in the entire dataset.
 
 ## Data Limitations
 This dataset doesn't include the reason a customer left. There is no survey or complaint data, so the recommendations above are based on patterns rather than confirmed causes. This matters most for the 3-4 product pattern above, where the direction of cause and effect isn't known. The dataset also doesn't break down which specific products customers hold (savings, credit card, loan, etc.), which limits how specific a product-related recommendation can get. Finally, the five customer segments used in Question 4 (Loyal, Established, At-Risk, Non-Active, Regular) were defined for this analysis rather than provided by the bank, so the exact thresholds used (tenure, balance) are a starting point rather than a validated business definition.
