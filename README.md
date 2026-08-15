@@ -199,6 +199,36 @@ One detail is worth checking further. Loyal has the highest average product coun
 
 - The relationship isn't a straight line. Two products is the safest spot (7.6% churn), clearly better than one (27.7%), but three or four products come with very high churn (82.7% and 100%). The sample at 3-4 products is small (326 customers combined), and this dataset doesn't explain the underlying cause, so this pattern is treated as an open question rather than a basis for encouraging unlimited product cross-selling.
 
+## Conclusion
+Four attributes come up again and again across the four questions: age, activity status, country, and gender. None of them work alone. It's the combinations that matter most, not any single attribute on its own.
+
+The highest-risk customer profile in this dataset is German, aged 50 to 59. This group's churn rate is 70.0%, already high even while the customer is still active (51.9%), and climbs to 86.3% once they become inactive. It's the sharpest, most concentrated risk found in the analysis, though also the smallest in size (277 customers).
+
+Age 40-49 tells a different but equally important story. Its churn rate (30.8%) is much lower than 50-59's, but because the group is far bigger (2,618 customers, more than double the size of 50-59), it contributes the largest share of total churn overall: 806 out of 2,037 churned customers, or 39.6%, more than any other age bracket. A strategy based only on churn rate would miss this.
+
+Activity status is the most consistent driver in the entire dataset, not just among older customers. 63.9% of every customer who churned was already inactive before leaving. How common inactivity is stays roughly the same across every country and age group, at around 47-53% of customers. What it costs in churn does not: it ranges from under 25% in France and Spain to over 80% for customers aged 50 and up.
+
+Gender adds another layer on top of these. Female customers churn more than male customers in every single country and every single age bracket, with no exceptions, and the gap widens as customers get older. This doesn't change which segment carries the highest risk, but it sharpens who to reach first within that segment.
+
+One pattern doesn't have a clear explanation. Customers holding 3 or 4 products churn at 82.7% and 100%, far higher than customers holding 2 (7.6%, the lowest rate in the dataset), and this holds even among customers who are still active. The dataset doesn't explain why, so it's treated here as an open question rather than a basis for any direct recommendation.
+
+## Recommendations
+
+**1. Prioritize retention outreach for German customers aged 50 to 59**
+This is the highest churn rate found across the whole analysis: 70.0% overall, still 51.9% while active, and 86.3% once inactive. The group is small (277 customers), which makes it a good fit for a high-touch approach, direct contact from a relationship manager, personalized offers, and checking in before signs of disengagement appear. Within this group, female customers should be reached first, since the gender gap is widest in Germany and in this specific age bracket.
+
+**2. Run a broader retention campaign for the 40-49 age group**
+This bracket has a lower churn rate (30.8%) than 50-59, but it's the single largest source of total churn in the dataset, 806 customers, or 39.6% of all churn. Because the group is large, a lower-cost, wider-reach approach fits better here than the high-touch approach in Priority 1, for example email campaigns, in-app prompts, or standard win-back offers. The volume comes from all three countries, so this should run bank-wide rather than being limited to Germany.
+
+**3. Build ongoing activity monitoring across the whole customer base**
+63.9% of every customer who churned was already inactive beforehand, the most consistent signal in the dataset. Since inactivity is roughly equally common everywhere (about 47-53% of customers regardless of country or age), this needs to be a bank-wide policy rather than a segment-specific one. The urgency should scale with the customer's profile: an inactive customer in Germany or aged 50 and up needs immediate follow-up (churn risk above 80%), while a young or French/Spanish inactive customer is lower stakes (10-25%) but still worth a lighter-touch nudge.
+
+**Watchlist: customers holding 3 or 4 products**
+This group churns at 82.7% (3 products) and 100% (4 products), compared to just 7.6% for customers holding 2, the lowest rate in the dataset, and this holds true even among customers who are still active (80.3% churn). No recommendation is made for customers who already hold 3 or 4 products, since the dataset doesn't explain why the pattern exists, and there's no clear rationale for encouraging someone to drop a product. The safer, actionable move is for customers holding only 1 product (5,084 customers, 27.7% churn): encouraging a second product looks reasonable, since 2 products is the point with the lowest churn in the entire dataset.
+
+## Data Limitations
+This dataset doesn't include the reason a customer left, no survey or complaint data, so the recommendations above are based on patterns rather than confirmed causes. This matters most for the 3-4 product pattern above, where the direction of cause and effect isn't known. The dataset also doesn't break down which specific products customers hold (savings, credit card, loan, etc.), which limits how specific a product-related recommendation can get. Finally, the five customer segments used in Question 4 (Loyal, Established, At-Risk, Non-Active, Regular) were defined for this analysis rather than provided by the bank, so the exact thresholds used (tenure, balance) are a starting point rather than a validated business definition.
+
 ## Tools Used
 - MySQL (MySQL Workbench) for data cleaning and analysis
 - Dataset: [Bank Customer Churn Dataset](https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset) from Kaggle
