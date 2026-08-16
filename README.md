@@ -188,7 +188,7 @@ Active status was already the clearest difference found in Question 1. The last 
 - Established, now made up only of active customers who meet the tenure and balance criteria, has a churn rate of 17.0%, much lower than the 24.7% seen before active status was checked first, when the segment mixed active and inactive customers together.
 - Loyal has the highest average balance (132,560.2) and product count (2.1) of any segment, but is no longer the lowest-churn segment. Regular (12.5%) and At-Risk (12.7%) are both lower. This suggests that once inactive customers are separated out properly, active status is a stronger churn driver than balance or product count on their own.
 
-One detail is worth checking further. Loyal has the highest average product count (2.1) of any segment, and Established has the lowest (1.3), which lines up with Loyal's lower churn rate. But an average can hide a lot, so the table below breaks down churn rate by the exact number of products held, across the whole customer base rather than within just these five segments.
+Loyal has the highest average product count (2.1) of any segment, and Established has the lowest (1.3), which lines up with Loyal's lower churn rate. An average can hide a lot, though, so the table below breaks down churn rate by the exact number of products held, across the whole customer base rather than within just these five segments.
 
 | Products Held | Customers | Churn Rate |
 |---|---|---|
@@ -202,16 +202,15 @@ One detail is worth checking further. Loyal has the highest average product coun
 ## Conclusion
 The highest-risk customer profile in this dataset is German, aged 50 to 59. Churn in this group is 70.0%, already high while the customer is still active (51.9%), and climbs to 86.3% once they become inactive. This is the sharpest and most concentrated risk found in the analysis, though also the smallest group (277 customers).
 
-Age 40-49 tells a different but equally important story. Its churn rate (30.8%) is much lower than 50-59's. But the group is three times bigger (2,618 customers), so it contributes the largest share of total churn: 806 out of 2,037 churned customers (39.6%), more than any other age bracket. A strategy based only on churn rate would miss this.
+Age 40-49 has a much lower churn rate than 50-59 (30.8%), but the group is three times bigger (2,618 customers), so it contributes the largest share of total churn: 806 out of 2,037 churned customers (39.6%), more than any other age bracket. A strategy based only on churn rate would miss this.
 
 Activity status is the most consistent driver in the entire dataset, not just among older customers. 63.9% of all churned customers were inactive at their last record. How common inactivity is stays roughly the same across every country and age group, at around 47-53% of customers. What it costs in churn does not: it ranges from under 25% in France and Spain to over 80% for customers aged 50 and up.
 
-Gender adds another layer on top of these. Female customers churn more than male customers in every single country and every single age bracket, with no exceptions, and the gap widens as customers get older. This doesn't change which segment carries the highest risk, but it shows who to reach first within that segment.
+Female customers churn more than male customers in every single country and every single age bracket, with no exceptions, and the gap widens as customers get older. This doesn't change which segment carries the highest risk, but it shows who to reach first within that segment.
 
-One pattern has no clear explanation. Customers holding 3 or 4 products churn at 82.7% and 100%, far higher than customers holding 2 (7.6%, the lowest rate in the dataset), and this holds even among customers who are still active. The dataset doesn't explain why, so this is treated as an open question rather than a basis for any direct recommendation.
+Customers holding 3 or 4 products churn at 82.7% and 100%, far higher than customers holding 2 (7.6%, the lowest rate in the dataset), and this holds even among customers who are still active. The dataset doesn't explain why, so this is treated as an open question rather than a basis for any direct recommendation.
 
 ## Recommendations
-The findings point to one root driver: activity status. Every recommendation below builds on it, starting from a monitoring foundation and moving up to the groups where follow-up is most urgent. The numbers behind each step come from the EDA sections above, and the limits of what they can prove are listed in the next section.
 
 **1. Build a bank-wide activity monitoring program (the foundation)**
 - Why: 63.9% of all churned customers were inactive at their last record. Inactivity is the clearest and most consistent signal in the dataset, and it is equally common everywhere (about 47-53% of customers regardless of country or age).
